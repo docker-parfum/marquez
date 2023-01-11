@@ -15,7 +15,7 @@ COPY clients/java ./clients/java
 RUN ./gradlew --no-daemon clean :api:shadowJar
 
 FROM eclipse-temurin:17
-RUN apt-get update && apt-get install -y postgresql-client bash coreutils
+RUN apt-get update && apt-get install --no-install-recommends -y postgresql-client bash coreutils && rm -rf /var/lib/apt/lists/*;
 WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/api/build/libs/marquez-*.jar /usr/src/app
 COPY marquez.dev.yml marquez.dev.yml
